@@ -22,17 +22,18 @@ def send_telegram_message(reservation):
     response = requests.post(url, data=data)
     return response.json()
 def reserve_ktx():
-    KORAIL_ID = '1463203706'
-    KORAIL_PW = 'ahfmsek2!'
-
+    # KORAIL_ID = '1463203706'
+    # KORAIL_PW = 'ahfmsek2!'
+    KORAIL_ID = '1260025642'
+    KORAIL_PW = 'Eos5k907!@'
     PUSHOVER_APP_TOKEN = 'APP_TOKEN'
     PUSHOVER_USER_TOKEN = 'USER_TOKEN'
 
-    DEP = '부산'
-    ARV = '서울'
-    DEP_DATE = '20240212'
-    DEP_TIME = '080000'
-    LIMIT_DEP_TIME_STRING = '100000'
+    DEP = '서울'
+    ARV = '구포'
+    DEP_DATE = '20240210'
+    DEP_TIME = '125000'
+    LIMIT_DEP_TIME_STRING = '132000'
     LIMIT_DEP_TIME_DATETIME = datetime.strptime(LIMIT_DEP_TIME_STRING, "%H%M%S")
     PSGRS = [AdultPassenger(1)]
     TRAIN_TYPE = TrainType.KTX
@@ -61,17 +62,22 @@ def reserve_ktx():
                     if not is_continue:
                         pass
                         # beepsound()
-            # time.sleep(0.1)
+            time.sleep(0.5)
         except Exception as e:
             if "No Results" in str(e):
                 print(f"No Results//{datetime.now().time()},{e}")
+                time.sleep(0.5)
                 continue
             if "잔여석없음" in str(e):
                 print(f"잔여석없음//{datetime.now().time()}")
-                time.sleep(0.1)
+                time.sleep(0.5)
                 continue
             k.login()
             print(f"로그인 다시 시도 error:{e}")
+            if "매크로" in str(e):
+                print("매크로 감지로 1분 휴식")
+                time.sleep(60)
+                continue
             continue
 
 
